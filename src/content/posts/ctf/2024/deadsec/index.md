@@ -15,7 +15,7 @@ draft: false
   - [bing_revenge (100pt, 84solves)](#bing-revenge-en)
   - [Colorful Board (360pt, 15solves, 🩸firstblood)](#colorful-board-en)
 - [misc](#misc-en)
-  - [Mic check (100pt, 264solves)](#mic-check-en)
+  - [Mic check (100pt, 264solves, 🩸firstblood)](#mic-check-en)
 
 <h1 id="web-en">Web</h1>
 <h2 id="ping2-en">Ping2 (100pt, 140solves)</h2>
@@ -390,7 +390,7 @@ print(res.text)
 FLAG: `DEAD{Enj0y_y0ur_c010rful_w3b_with_c55}`
 
 <h1 id="misc-en">Misc</h1>
-<h2 id="mic-check-en">Mic check (100pt, 264solves)</h2>
+<h2 id="mic-check-en">Mic check (100pt, 264solves, 🩸firstblood)</h2>
 
 :::important[info]
 
@@ -421,7 +421,7 @@ p.interactive()
   - [bing_revenge (100pt, 84solves)](#bing-revenge-ko)
   - [Colorful Board (360pt, 15solves, 🩸firstblood)](#colorful-board-ko)
 - [misc](#misc-ko)
-  - [Mic check (100pt, 264solves)](#mic-check-ko)
+  - [Mic check (100pt, 264solves, 🩸firstblood)](#mic-check-ko)
 
 <h1 id="web-ko">Web</h1>
 <h2 id="ping2-ko">Ping2 (100pt, 140solves)</h2>
@@ -794,7 +794,7 @@ print(res.text)
 FLAG: `DEAD{Enj0y_y0ur_c010rful_w3b_with_c55}`
 
 <h1 id="misc-ko">Misc</h1>
-<h2 id="mic-check-ko">Mic check (100pt, 264solves)</h2>
+<h2 id="mic-check-ko">Mic check (100pt, 264solves, 🩸firstblood)</h2>
 
 :::important[info]
 
