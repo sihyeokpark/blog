@@ -2,11 +2,15 @@
 title: DeadSec CTF 2024 Writeup
 published: 2024-07-28
 tags: [CTF, DeadSecCTF, web, misc]
-category: Examples
+category: CTF
 draft: false
 ---
 
-# DeadSec CTF 2024 Writeup
+Table of contents
 
-few
-fewofiewjio
+- [Colorful Board (300pt, 5solves)](#colorful-board)
+
+## Colorful board
+
+300pt, 5solves
+testtesttesttest
