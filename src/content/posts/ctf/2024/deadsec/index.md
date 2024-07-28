@@ -93,7 +93,7 @@ Let's read `post.hbs` and `post-edit.hbs` to know attack-vector.
 </body>
 ```
 
-In `post.hbs`, there is no attack point to css injection because name of admin is revealed in `<p>` tag. Nothing that could leak `innerText` of `<p>` tag.  
+In `post.hbs`, there is no attack point to css injection because name of admin is revealed in `<p>` tag. ~~Nothing that could leak `innerText` of `<p>` tag.~~. It is possible this selection `#:~:text={urllib.parse.quote(flag)}` but it doesn't work on this chall.  
   
 `post-edit.hbs`
 
