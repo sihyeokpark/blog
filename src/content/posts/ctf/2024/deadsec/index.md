@@ -300,7 +300,7 @@ async renderAllNotice() {
 id of first report (asdf) was `66a48616b3027e48519f2d68`  
 id of sencond report (qwer) was `66a4861db3027e48519f2d6a`  
 
-mongodb's id is predictable because of <a href="https://github.com/andresriancho/mongo-objectid-predict?tab=readme-ov-file#mongo-objectid-introduction" target="_blank">this logic</a>.  
+mongodb's id is predictable because of <a href="https://www.mongodb.com/ko-kr/docs/manual/reference/method/ObjectId/" target="_blank">this logic</a>.  
 so, id of flag report may be `66a4861{7-c}b3027e48519f2d69`
 
 ### Exploit Code
@@ -705,7 +705,7 @@ async renderAllNotice() {
 첫 report (asdf)의 id: `66a48616b3027e48519f2d68`  
 두번째 report (qwer)의 id: `66a4861db3027e48519f2d6a`  
 
-mongodb의 id는 <a href="https://github.com/andresriancho/mongo-objectid-predict?tab=readme-ov-file#mongo-objectid-introduction" target="_blank">다음과 같은 로직</a>으로 생성되기 때문에 예측이 가능하다. 그러므로 flag report의 id는 `66a4861{7-c}b3027e48519f2d69` 중 하나이다.
+mongodb의 id는 <a href="https://www.mongodb.com/ko-kr/docs/manual/reference/method/ObjectId/" target="_blank">다음과 같은 로직</a>으로 생성되기 때문에 예측이 가능하다. 그러므로 flag report의 id는 `66a4861{7-c}b3027e48519f2d69` 중 하나이다.
 
 ### Exploit Code
 
