@@ -391,6 +391,7 @@ FLAG: `DEAD{Enj0y_y0ur_c010rful_w3b_with_c55}`
 
 <h1 id="misc-en">Misc</h1>
 <h2 id="mic-check-en">Mic check (100pt, 264solves)</h2>
+
 :::important[info]
 
 - keywords: `auto`
@@ -794,6 +795,7 @@ FLAG: `DEAD{Enj0y_y0ur_c010rful_w3b_with_c55}`
 
 <h1 id="misc-ko">Misc</h1>
 <h2 id="mic-check-ko">Mic check (100pt, 264solves)</h2>
+
 :::important[info]
 
 - keywords: `auto`
