@@ -8,9 +8,9 @@ draft: false
 
 ### Table of contents
 
-- [Colorful Board (300pt, 5solves, 🩸firstblood)](#colorful-board-300pt-5solves-🩸firstblood)
+- [Colorful Board (360pt, 15solves, 🩸firstblood)](#colorful-board-360pt-15solves-🩸firstblood)
 
-## Colorful Board (300pt, 5solves, 🩸firstblood)
+## Colorful Board (360pt, 15solves, 🩸firstblood)
 
 :::important[info]
 
