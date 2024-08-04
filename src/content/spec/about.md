@@ -7,5 +7,5 @@ I'm 16 yo developer from South Korea. And I am a sophomore at Korea Digital Medi
 ### Colleague
 
 - <a href="https://z1gyeol.github.io" target="_blank">z1gyeol</a>
-- <a href="https://c0degolf.github.io/blog" target="_blank">c0degolf</a>
+- <a href="https://c0degolf.github.io" target="_blank">c0degolf</a>
 - <a href="https://blog.wane.im" target="_blank">Wane</a>
