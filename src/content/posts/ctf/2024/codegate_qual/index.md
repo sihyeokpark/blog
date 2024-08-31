@@ -15,15 +15,13 @@ draft: false
 
 # Review
 
-![alt text](img/20240830_100131.jpg)
+![alt text](img/20240829_090612.jpg) ![alt text](img/20240830_100131.jpg)
 
 코드게이트 본선에 처음으로 출전하게 되서 매우 기대가 됐었는데 기대 이상으로 신기하고 재밌는 경험이었다. ctf에서는 10등을 했다. 딱히 높은 등수는 아니지만 주분야인 웹을 2문제는 풀어서 만족했다. 특히 승찬이와 함께 이스라엘에서 온 ItayB, 호주에서 온 TheSavage Teddy와 얘기하면서 외국의 보안업계에 대해 알아도 보고 재밌게 대화했다.  
 그리고 드림핵에서 온 부스도 체험하고 뱃지도 받고, 문제 출제자분들이 진행하는 Writeup 세션까지 듣고 모르던 지식을 많이 배웠다.  
 감사하게도 일반부 1등 팀인 Blue Water과 Zellic에서 CTF 참가자 전체를 대상으로 애슐리 퀸즈를 사주셔서 7시에 다른 주니어 참가자들과 함께 밥을 먹었는데, 온라인에서만 대화하던 친구, 형들과 대화를 하니 진짜 정말 재밌었다. 6시 반쯤에 도착해 9시 좀 넘게까지 대화를 했는데 전혀 지루하지 않고 계속 얘기하고 싶을 정도였다.  
 정말 잊을 수 없는 경험이었고 이제 고3이 될 예정이라 공부에 집중해야할 시기가 되었는데 그럼에도 불구하고 이 경험은 다시 한번 해보고 싶다!  
   
-  
-
 PS. 코드게이트 대회 및 컨퍼런스 준비하신 모든 분들과 애슐리 초대해주신 Blue Water팀과 Zellic, 스벅 사주신 m0nd2y 선배, 그리고 재밌게 대화한 다른 주니어 CTF 형들과 친구들에게 감사드립니다!!  
   
 PS. Thank you to everyone who prepared for the Codegate, Blue Water and Zellic that invited all ctf players to Ashyley, m0nd2y who bought drink, and other junior CTF brothers who had fun talking to each other!!
