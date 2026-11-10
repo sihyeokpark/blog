@@ -3,6 +3,7 @@ title: DeadSec CTF 2024 Writeup
 published: 2024-07-28
 tags: [web, misc]
 category: CTF
+description: "Web and misc writeups from DeadSec CTF 2024 — Ping2, Colorful Board and more, including my first-ever first blood."
 draft: false
 ---
 

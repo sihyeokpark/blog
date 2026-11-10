@@ -1,25 +1,23 @@
 ---
-import {getCategoryList, getSortedPosts} from "@utils/content-utils";
-import MainGridLayout from "@layouts/MainGridLayout.astro";
-import ArchivePanel from "@components/ArchivePanel.astro";
-import {i18n} from "@i18n/translation";
-import I18nKey from "@i18n/i18nKey";
+import PostList from '../../../components/PostList.astro'
+import Base from '../../../layouts/Base.astro'
+import { getPosts } from '../../../utils/posts'
 
 export async function getStaticPaths() {
-    const categories = await getCategoryList();
-    return categories.map(category => {
-        return {
-            params: {
-                category: category.name
-            }
-        }
-    });
+  const posts = await getPosts()
+  const cats = [...new Set(posts.map((p) => p.data.category).filter(Boolean))] as string[]
+  return cats.map((category) => ({ params: { category }, props: { category } }))
 }
-
-const { category } = Astro.params;
-
+const { category } = Astro.props
+const posts = (await getPosts()).filter((p) => p.data.category === category)
 ---
-
-<MainGridLayout title={i18n(I18nKey.archive)} description={i18n(I18nKey.archive)}>
-    <ArchivePanel categories={[category]}></ArchivePanel>
-</MainGridLayout>
+<Base title={category} active="archive">
+  <header class="page-head">
+    <div class="crumb"><a href="/archive/">Archive</a> / Category</div>
+    <h1>{category}</h1>
+    <p>{posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
+  </header>
+  <section>
+    <PostList posts={posts} />
+  </section>
+</Base>

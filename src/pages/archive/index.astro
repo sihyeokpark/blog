@@ -1,12 +1,31 @@
 ---
-import { getCollection, getEntry } from "astro:content";
-import MainGridLayout from "@layouts/MainGridLayout.astro";
-import ArchivePanel from "@components/ArchivePanel.astro";
-import {i18n} from "@i18n/translation";
-import I18nKey from "@i18n/i18nKey";
+import PostList from '../../components/PostList.astro'
+import Base from '../../layouts/Base.astro'
+import { categoryUrl, countBy, getPosts, tagUrl } from '../../utils/posts'
+
+const posts = await getPosts()
+const categories = countBy(posts, (p) => (p.data.category ? [p.data.category] : []))
+const tags = countBy(posts, (p) => p.data.tags ?? [])
 ---
-
-<MainGridLayout title={i18n(I18nKey.archive)}>
-    <ArchivePanel></ArchivePanel>
-</MainGridLayout>
-
+<Base title="Archive" active="archive">
+  <header class="page-head">
+    <h1>Archive</h1>
+    <p>{posts.length} posts, by year.</p>
+  </header>
+  <section>
+    <h2 class="sec">Categories</h2>
+    <div class="toc-chips">
+      {categories.map((c) => <a class="chip" href={categoryUrl(c.name)}>{c.name} <span class="n">{c.count}</span></a>)}
+    </div>
+  </section>
+  <section>
+    <h2 class="sec">Tags</h2>
+    <div class="toc-chips">
+      {tags.map((t) => <a class="chip" href={tagUrl(t.name)}>#{t.name} <span class="n">{t.count}</span></a>)}
+    </div>
+  </section>
+  <section>
+    <h2 class="sec">All posts</h2>
+    <PostList posts={posts} showExcerpt={false} />
+  </section>
+</Base>

@@ -1,0 +1,32 @@
+---
+import { type Post, categoryUrl, excerpt, fmtShort, groupByYear, postUrl, tagUrl } from '../utils/posts'
+
+interface Props {
+  posts: Post[]
+  showExcerpt?: boolean
+}
+const { posts, showExcerpt = true } = Astro.props
+const groups = groupByYear(posts)
+---
+<div class="post-list">
+  {posts.length === 0 && <p class="empty">No posts yet.</p>}
+  {groups.map(([year, items]) => (
+    <>
+      <div class="year-head">{year}</div>
+      {items.map((p) => (
+        <article class="post">
+          <time class="post-date" datetime={p.data.published.toISOString()}>{fmtShort(p.data.published)}</time>
+          <div class="post-main">
+            <div class="post-title"><a href={postUrl(p)}>{p.data.title}</a></div>
+            {showExcerpt && <div class="post-excerpt">{excerpt(p)}</div>}
+            <div class="meta">
+              {p.data.category && <a class="badge" href={categoryUrl(p.data.category)}>{p.data.category}</a>}
+              {(p.data.tags ?? []).map((t) => <a class="tag" href={tagUrl(t)}>#{t}</a>)}
+              {p.data.draft && <span class="tag">draft</span>}
+            </div>
+          </div>
+        </article>
+      ))}
+    </>
+  ))}
+</div>

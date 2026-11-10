@@ -1,0 +1,23 @@
+---
+import PostList from '../components/PostList.astro'
+import { site } from '../config'
+import Base from '../layouts/Base.astro'
+import { categoryUrl, countBy, getPosts } from '../utils/posts'
+
+const posts = await getPosts()
+const categories = countBy(posts, (p) => (p.data.category ? [p.data.category] : []))
+---
+<Base active="posts">
+  <header class="page-head">
+    <h1>Blog</h1>
+    <p>Notes on CTFs, web security, and building things. Written by <a href={site.home}>Sihyeok Park (EXON)</a>.</p>
+    <div class="toc-chips">
+      <a class="chip active" href="/">All <span class="n">{posts.length}</span></a>
+      {categories.map((c) => <a class="chip" href={categoryUrl(c.name)}>{c.name} <span class="n">{c.count}</span></a>)}
+      <a class="chip" href="/rss.xml">RSS</a>
+    </div>
+  </header>
+  <section>
+    <PostList posts={posts} />
+  </section>
+</Base>
