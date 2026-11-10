@@ -3,7 +3,7 @@ title: Become a freshman
 published: 2026-05-03
 tags: [life]
 category: life
-draft: false
+draft: true
 ---
 
 오랜만입니다!  
